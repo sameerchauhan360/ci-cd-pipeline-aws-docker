@@ -118,7 +118,9 @@ class DataValidation:
             )
 
             n_features = json_report["data_drift"]["data"]["metrics"]["n_features"]
-            n_drifted_features = json_report["data_drift"]["data"]["metrics"]["n_drifted_features"]
+            n_drifted_features = json_report["data_drift"]["data"]["metrics"][
+                "n_drifted_features"
+            ]
 
             logging.info(f"{n_drifted_features}/{n_features} drift detected.")
             drift_status = json_report["data_drift"]["data"]["metrics"]["dataset_drift"]
