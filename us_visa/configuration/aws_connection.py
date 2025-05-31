@@ -1,0 +1,56 @@
+import boto3
+import os
+from us_visa.constants import (
+    AWS_ACCESS_KEY_ID_ENV_KEY,
+    AWS_SECRET_ACCESS_KEY_ENV_KEY,
+    REGION_NAME,
+)
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+class S3Client:
+    s3_client = None
+    s3_resource = None
+
+    def __init__(self, region_name=REGION_NAME, use_localstack=False):
+        """
+        This Class gets aws credentials from .env file and create an connection with s3 bucket and raise exception when
+        environment variable is not set.
+        """
+
+        if S3Client.s3_client == None or S3Client.s3_resource == None:
+            __access_key_id = os.getenv(AWS_ACCESS_KEY_ID_ENV_KEY)
+            __secret_access_key = os.getenv(AWS_SECRET_ACCESS_KEY_ENV_KEY)
+
+            if __access_key_id == None:
+                raise Exception(
+                    f"Environment Variable: {AWS_ACCESS_KEY_ID_ENV_KEY} is not set."
+                )
+            if __secret_access_key == None:
+                raise Exception(
+                    f"Environment Variable: {AWS_SECRET_ACCESS_KEY_ENV_KEY} is not set."
+                )
+
+            # For LocalStack
+            endpoint_url = "http://localhost:4566" if use_localstack else None
+
+            S3Client.s3_resource = boto3.resource(
+                "s3",
+                aws_access_key_id=__access_key_id,
+                aws_secret_access_key=__secret_access_key,
+                region_name=region_name,
+                endpoint_url="http://localhost:4566",
+            )
+
+            S3Client.s3_client = boto3.client(
+                "s3",
+                aws_access_key_id=__access_key_id,
+                aws_secret_access_key=__secret_access_key,
+                region_name=region_name,
+                endpoint_url="http://localhost:4566",
+            )
+
+        self.s3_client = S3Client.s3_client
+        self.s3_resource = S3Client.s3_resource

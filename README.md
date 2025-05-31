@@ -129,4 +129,23 @@ export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
    - ECR_REPO
 
     
+# LocalStack S3 Bucket Setup for US Visa ML Project
+## Start LocalStack (if not already running)
+```bash
+docker run -d -p 4566:4566 -p 4571:4571 localstack/localstack
+```
+## Create S3 Bucket
+```bash
+aws --endpoint-url=http://localhost:4566 s3 mb s3://usvisa-model2024
+```
+✅ This creates the bucket usvisa-model2024 locally inside LocalStack.
 
+## List All Buckets
+```bash
+aws --endpoint-url=http://localhost:4566 s3 ls
+```
+✅ You should see the usvisa-model2024 bucket listed.
+## List Objects in the Bucket
+```bash
+aws --endpoint-url=http://localhost:4566 s3 ls s3://usvisa-model2024
+```
