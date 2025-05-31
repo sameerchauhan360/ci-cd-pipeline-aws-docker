@@ -131,8 +131,13 @@ export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
     
 # LocalStack S3 Bucket Setup for US Visa ML Project
 ## Start LocalStack (if not already running)
+### With docker
 ```bash
 docker run -d -p 4566:4566 -p 4571:4571 localstack/localstack
+```
+### With python 
+```bash
+localstack start
 ```
 ## Create S3 Bucket
 ```bash
