@@ -123,7 +123,7 @@ class ModelEvaluation:
                 trained_model_path=self.model_trainer_artifact.trained_model_file_path,
                 changed_accuracy=evaluate_model_response.difference,
             )
-            
+
             logging.info(f"Model evaluation artifact: {model_evaluation_artifact}")
             return model_evaluation_artifact
         except Exception as e:
