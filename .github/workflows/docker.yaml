@@ -23,5 +23,5 @@ jobs:
                 
             -   name: Build and Push Docker Image
                 run: |
-                    docker build -t ${{ secrets.DOCKER_USERNAME }}/ci-cd-pipeline:latest
+                    docker build -t ${{ secrets.DOCKER_USERNAME }}/ci-cd-pipeline:latest .
                     docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-pipeline:latest
