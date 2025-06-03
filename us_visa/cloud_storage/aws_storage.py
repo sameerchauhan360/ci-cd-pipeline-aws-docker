@@ -262,3 +262,23 @@ class SimpleStorageService:
             return df
         except Exception as e:
             raise USvisaException(e, sys) from e
+    
+    def create_bucket_if_not_exists(self, bucket_name: str, region: str = "us-east-1"):
+        """
+        Create the bucket if it does not exist.
+        """
+        try:
+            existing_buckets = [bucket.name for bucket in self.s3_resource.buckets.all()]
+            if bucket_name not in existing_buckets:
+                if region == "us-east-1":
+                    self.s3_client.create_bucket(Bucket=bucket_name)
+                else:
+                    self.s3_client.create_bucket(
+                        Bucket=bucket_name,
+                        CreateBucketConfiguration={'LocationConstraint': region}
+                    )
+                logging.info(f"Bucket '{bucket_name}' created successfully.")
+            else:
+                logging.info(f"Bucket '{bucket_name}' already exists.")
+        except Exception as e:
+            raise USvisaException(e, sys)
